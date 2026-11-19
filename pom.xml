@@ -11,7 +11,8 @@
     <groupId>com.example</groupId>
     <artifactId>attendance-system</artifactId>
     <version>1.0.0</version>
-    <name>attendance-system</name>
+   
+    <n>attendance-system</n>
     <description>Attendance Management System (Spring Boot MVC)</description>
     <properties>
         <java.version>17</java.version>
