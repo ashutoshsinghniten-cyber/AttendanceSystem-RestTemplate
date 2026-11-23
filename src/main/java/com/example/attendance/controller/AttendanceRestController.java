@@ -1,5 +1,5 @@
 package com.example.attendance.controller;
-
+import com.example.attendance.dto.EmployeeRequest;
 import com.example.attendance.dto.AttendanceRequest;
 import com.example.attendance.dto.AttendanceResponse;
 import com.example.attendance.entity.Employee;
@@ -46,8 +46,8 @@ public class AttendanceRestController {
     }
 
     @PostMapping("/employees")
-    public ResponseEntity<?> createEmployee(@Valid @RequestBody Employee employee) {
-        employee.setId(null); // always create a new record
+    public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeRequest request) {
+        Employee employee = new Employee(request.name(), request.email(), request.department());
         if (employeeService.emailTaken(employee)) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("error", "Email already registered"));
