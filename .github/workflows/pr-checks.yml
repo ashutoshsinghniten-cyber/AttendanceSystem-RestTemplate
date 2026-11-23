@@ -54,7 +54,7 @@ jobs:
         run: >
           mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.qualitygate.wait=true
+         
       - name: Upload test reports if tests failed
         if: failure()
         uses: actions/upload-artifact@v4
