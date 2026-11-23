@@ -1,5 +1,6 @@
 package com.example.attendance.controller;
 
+import com.example.attendance.dto.EmployeeForm;
 import com.example.attendance.entity.Employee;
 import com.example.attendance.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -27,19 +28,27 @@ public class EmployeeController {
 
     @GetMapping("/new")
     public String newForm(Model model) {
-        model.addAttribute("employee", new Employee());
+        model.addAttribute("employee", new EmployeeForm());
         return "employees/form";
     }
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
-        model.addAttribute("employee", employeeService.findById(id));
+        Employee existing = employeeService.findById(id);
+        EmployeeForm form = new EmployeeForm();
+        form.setId(existing.getId());
+        form.setName(existing.getName());
+        form.setEmail(existing.getEmail());
+        form.setDepartment(existing.getDepartment());
+        model.addAttribute("employee", form);
         return "employees/form";
     }
 
     @PostMapping
-    public String save(@Valid @ModelAttribute("employee") Employee employee,
+    public String save(@Valid @ModelAttribute("employee") EmployeeForm form,
                        BindingResult result, RedirectAttributes redirect) {
+        Employee employee = new Employee(form.getName(), form.getEmail(), form.getDepartment());
+        employee.setId(form.getId());
         if (!result.hasFieldErrors("email") && employeeService.emailTaken(employee)) {
             result.rejectValue("email", "duplicate", "This email is already registered");
         }
