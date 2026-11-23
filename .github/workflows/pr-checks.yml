@@ -63,7 +63,7 @@ jobs:
           name: test-reports
           path: target/surefire-reports/
 
-    docker:
+  docker:
     name: Docker build
     runs-on: ubuntu-latest
     permissions:
