@@ -63,11 +63,14 @@ jobs:
           name: test-reports
           path: target/surefire-reports/
 
-  docker:
+    docker:
     name: Docker build
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v5
-      - name: Lint Dockerfile
+      - name: Lint Dockerfile (hadolint)
+        run: docker run --rm -i hadolint/hadolint hadolint --failure-threshold error - < Dockerfile
+      - name: Build image
+        run: docker build . --file Dockerfile --tag app:${{ github.sha }}
