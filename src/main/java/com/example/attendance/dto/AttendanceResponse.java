@@ -1,10 +1,7 @@
 package com.example.attendance.dto;
-
 import com.example.attendance.entity.Attendance;
 import com.example.attendance.entity.AttendanceStatus;
-
 import java.time.LocalDate;
-
 public record AttendanceResponse(
         Long id,
         Long employeeId,
